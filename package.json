@@ -1,0 +1,19 @@
+{
+  "name": "three",
+  "version": "1.0.0",
+  "description": "Weekly assignment &amp; Capstone Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxv2k/CS105_Computer_Graphics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dxv2k/CS105_Computer_Graphics/issues"
+  },
+  "homepage": "https://github.com/dxv2k/CS105_Computer_Graphics#readme"
+}
