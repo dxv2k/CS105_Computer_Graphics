@@ -13,8 +13,12 @@ function init(){
     // var box = getBox(1,1,1);
     var boxGrid = getBoxGrid(10,1.5);
     var plane = getPlane(20);
-    var pointLight = getPointLight(1);
+    // var pointLight = getPointLight(1);
+    var directionalLight = getDirectionalLight(1);
+    var spotLight = getSpotLight(1);
     var sphere = getSphere(0.05);
+    var helper = new THREE.CameraHelper(directionalLight.shadow.camera);  
+    var ambientLight = getAmbientLight(1);
 
     // Set object as name and we can find it, call it by name
     plane.name = 'plane-1'; 
@@ -22,18 +26,26 @@ function init(){
     // box.position.y = box.geometry.parameters.height/2; // move box on top of plane  
     plane.rotation.x = Math.PI/2; // view at 90 degree angle 
     // plane.rotation.y = 1;  
-    pointLight.position.y = 2; 
-    pointLight.intensity = 2; 
+    directionalLight.position.x = 13; 
+    directionalLight.position.y = 4; 
+    directionalLight.position.z = 5; 
+    directionalLight.intensity = 2; 
 
-    gui.add(pointLight,'intensity', 0,10); 
-    gui.add(pointLight.position,'y', 0,5); 
+    gui.add(directionalLight,'intensity', 0,10); 
+    gui.add(directionalLight.position,'x', 0,20); 
+    gui.add(directionalLight.position,'y', 0,20); 
+    gui.add(directionalLight.position,'z', 0,20); 
+    // gui.add(directionalLight, "penumbra",0,1); 
 
     // scene.add(box); 
     // plane.add(box); 
+
     scene.add(plane); 
-    pointLight.add(sphere);
-    scene.add(pointLight); 
+    directionalLight.add(sphere);
+    scene.add(directionalLight); 
     scene.add(boxGrid); 
+    scene.add(helper);
+    scene.add(ambientLight);
 
     var camera = new THREE.PerspectiveCamera( 
         45, // field of view 
@@ -66,9 +78,36 @@ function init(){
     return scene; 
 }
 
+function getDirectionalLight(intensity){ 
+    var light = new THREE.DirectionalLight(0xffffff, intensity); 
+    light.castShadow = true; 
+    light.shadow.camera.left = -10; 
+    light.shadow.camera.bottom = -10; 
+    light.shadow.camera.right = 10; 
+    light.shadow.camera.top = 10; 
+
+    return light;  
+}
+
+function getAmbientLight(intensity){ 
+    var light = new THREE.AmbientLight("rgb(10,30,50)", intensity); 
+    return light;  
+}
+
+
 function getPointLight(intensity){ 
     var light = new THREE.PointLight(0xffffff, intensity); 
     light.castShadow = true; 
+
+    return light;  
+}
+
+function getSpotLight(intensity){ 
+    var light = new THREE.SpotLight(0xffffff, intensity); 
+    light.castShadow = true; 
+    light.shadow.bias = 0.001;
+    light.shadow.mapSize.width = 2048;
+    light.shadow.mapSize.height = 2048;
 
     return light;  
 }
