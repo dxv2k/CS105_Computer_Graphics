@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Graphic demo</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<div id="rendering" class="w-100 h-100 position-fixed">
+	</div>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			<div class="custom-menu">
+				<button type="button" id="sidebarCollapse" class="btn btn-primary">
+					<i class="fa fa-bars"></i>
+					<span class="sr-only">Toggle Menu</span>
+				</button>
+			</div>
+			<div class="p-4 pt-5">
+				<h1><a href="index.html" class="logo">TEAM A</a></h1>
+				<ul class="list-unstyled components mb-5">
+					<li>
+						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Geometry</a>
+						<ul class="collapse list-unstyled" id="homeSubmenu">
+							<li>
+								<a href="#" onclick="RenderGeo(1);">Cube</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(2);">Sphere</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(3);">Cone</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(4);">Cylinder</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(5);">Torus</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(6);">Teapot</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(7);">Icosahedron</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(8);">Dodecahedron</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(9);">Octahedron</a>
+							</li>
+							<li>
+								<a href="#" onclick="RenderGeo(10);">Tetrahedron</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Surface</a>
+						<ul class="collapse list-unstyled" id="pageSubmenu">
+							<li>
+								<a href="#" onclick="SetMaterial(1);">Point</a>
+							</li>
+							<li>
+								<a href="#" onclick="SetMaterial(2);">Line</a>
+							</li>
+							<li>
+								<a href="#" onclick="SetMaterial(3);">Solid</a>
+							</li>
+							<li>
+								<input type="file" accept="image/*" id="texture" style="display: none;"
+									onchange="SetTexture(window.URL.createObjectURL(this.files[0]))" />
+								<a href="#" name="button" onclick="Uploadimage();">Texture</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#lightSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Light</a>
+						<ul class="collapse list-unstyled" id="lightSubmenu">
+							<li>
+								<a href="#" onclick="SetPointLight()">Light</a>
+							</li>
+							<li>
+								<a href="#" onclick="RemoveLight()">Remove Light</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#animationSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Animation</a>
+						<ul class="collapse list-unstyled" id="animationSubmenu">
+							<li class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="animation1">
+								<label class="custom-control-label" for="animation1">#1</label>
+							</li>
+							<li class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="animation2">
+								<label class="custom-control-label" for="animation2">#2</label>
+							</li>
+							<li>
+								<a href="#" onclick="Animation3()">Animation 3</a>
+							</li>
+							<li>
+								<a href="#" onclick="Animation4()">Animation 4</a>
+							</li>
+							<li>
+								<a href="#" onclick="ResetAnimation()">Reset</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content">
+			<div class="mt-5">
+				<div class="ml-auto w-25">
+					<div class="col-1 ">
+						<button type="button" class="btn btn-light shadow movebutton" onclick="Translate()">
+							<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16"
+								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd"
+									d="M6.5 8a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1H6a.5.5 0 0 0 .5-.5z" />
+								<path fill-rule="evenodd"
+									d="M3.854 5.646a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L2.207 8l1.647-1.646a.5.5 0 0 0 0-.708zM9.5 8a.5.5 0 0 1 .5-.5h4.5a.5.5 0 0 1 0 1H10a.5.5 0 0 1-.5-.5z" />
+								<path fill-rule="evenodd"
+									d="M12.146 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.793 8l-1.647-1.646a.5.5 0 0 1 0-.708zM8 9.5a.5.5 0 0 0-.5.5v4.5a.5.5 0 0 0 1 0V10a.5.5 0 0 0-.5-.5z" />
+								<path fill-rule="evenodd"
+									d="M5.646 12.146a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8 13.793l-1.646-1.647a.5.5 0 0 0-.708 0zM8 6.5a.5.5 0 0 1-.5-.5V1.5a.5.5 0 0 1 1 0V6a.5.5 0 0 1-.5.5z" />
+								<path fill-rule="evenodd"
+									d="M5.646 3.854a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8 2.207 6.354 3.854a.5.5 0 0 1-.708 0z" />
+							</svg>
+						</button>
+						<button type="button" class="btn btn-light shadow repeatbutton" onclick="Rotate()">
+							<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd"
+									d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z" />
+								<path fill-rule="evenodd"
+									d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z" />
+							</svg>
+						</button>
+						<button type="button" class="btn btn-light shadow" onclick="Scale()">
+							<svg class="bi bi-arrows-fullscreen" width="1em" height="1em" viewBox="0 0 16 16"
+								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd"
+									d="M1.464 10.536a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5v-3.5a.5.5 0 0 1 .5-.5z" />
+								<path fill-rule="evenodd"
+									d="M5.964 10a.5.5 0 0 1 0 .707l-4.146 4.147a.5.5 0 0 1-.707-.708L5.257 10a.5.5 0 0 1 .707 0zm8.854-8.854a.5.5 0 0 1 0 .708L10.672 6a.5.5 0 0 1-.708-.707l4.147-4.147a.5.5 0 0 1 .707 0z" />
+								<path fill-rule="evenodd"
+									d="M10.5 1.5A.5.5 0 0 1 11 1h3.5a.5.5 0 0 1 .5.5V5a.5.5 0 0 1-1 0V2h-3a.5.5 0 0 1-.5-.5zm4 9a.5.5 0 0 0-.5.5v3h-3a.5.5 0 0 0 0 1h3.5a.5.5 0 0 0 .5-.5V11a.5.5 0 0 0-.5-.5z" />
+								<path fill-rule="evenodd"
+									d="M10 9.964a.5.5 0 0 0 0 .708l4.146 4.146a.5.5 0 0 0 .708-.707l-4.147-4.147a.5.5 0 0 0-.707 0zM1.182 1.146a.5.5 0 0 0 0 .708L5.328 6a.5.5 0 0 0 .708-.707L1.889 1.146a.5.5 0 0 0-.707 0z" />
+								<path fill-rule="evenodd"
+									d="M5.5 1.5A.5.5 0 0 0 5 1H1.5a.5.5 0 0 0-.5.5V5a.5.5 0 0 0 1 0V2h3a.5.5 0 0 0 .5-.5z" />
+							</svg>
+						</button>
+					</div>
+					<div class="ctrlpannel">
+						<div class="mr-auto card bg-light" style="max-width: 15rem;">
+							<div class="card-header">Control pannel</div>
+							<div class="card-body">
+								<!-- <label for="customFOV">Field of View</label> -->
+								<div>
+									<span class="mr-auto valueSpanFOV"></span>
+									<input type="range" class="custom-range" id="customFOV" min="0" max="180"
+										value="75">
+								</div>
+								<!-- <label for="customRange1">Near</label> -->
+								<div>
+									<span class="mr-auto valueSpanNear"></span>
+									<input type="range" class="custom-range" id="customNear" min="0.1" max="100"
+										value="0.1">
+								</div>
+								<!-- <label for="customRange1">Far</label> -->
+								<div>
+									<span class="mr-auto valueSpanFar"></span>
+									<input type="range" class="custom-range" id="customFar" min="200" max="2000"
+										value="1000">
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+	<script type="module" src="./index.js"></script>
+
+	<script>
+		$('#animation1').change(function () {
+			if ($(this).prop('checked')) {
+				Animation1();
+			}
+			else {
+				RemoveAnimation1();
+			}
+		});
+
+		$('#animation2').change(function () {
+			if ($(this).prop('checked')) {
+				Animation2();
+			}
+			else {
+				RemoveAnimation2();
+			}
+		});
+
+		function ResetAnimation() {
+			document.getElementById("animation1").checked = false;
+			document.getElementById("animation2").checked = false;
+			RemoveAllAnimation();
+  		};
+
+		$(document).ready(function () {
+			const $valueSpanFOV = $('.valueSpanFOV');
+			const $valueSpanNear = $('.valueSpanNear');
+			const $valueSpanFar = $('.valueSpanFar');
+
+			const $valueFOV = $('#customFOV');
+			const $valueNear = $('#customNear');
+			const $valueFar = $('#customFar');
+
+			$valueSpanFOV.html("Field of view: " + $valueFOV.val());
+			$valueFOV.on('input change', () => {
+				$valueSpanFOV.html("Field of view: " + $valueFOV.val());
+				setFOV($valueFOV.val());
+			});
+
+			$valueSpanNear.html("Near: " + $valueNear.val());
+			$valueNear.on('input change', () => {
+				$valueSpanNear.html("Near: " + $valueNear.val());
+				setNear($valueNear.val());
+			});
+
+			$valueSpanFar.html("Far: " + $valueFar.val());
+			$valueFar.on('input change', () => {
+				$valueSpanFar.html("Far: " + $valueFar.val());
+				setFar($valueFar.val());
+			});
+		});
+
+		function Uploadimage() {
+			document.getElementById("texture").click();
+		};
+	</script>
+</body>
+
+</html>
