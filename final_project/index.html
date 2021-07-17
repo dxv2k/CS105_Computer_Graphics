@@ -122,10 +122,36 @@
 						</ul>
 					</li>
 					<li>
-						<a href="#"> About </a>
+						<!-- Trigger modal -->
+						<a data-toggle="modal" href="#aboutModal"> About </a>
 					</li>
 				</ul>
-
+				<!-- Modal -->
+				<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">About Us</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body text-dark">
+								<h6> This project was built by</h6>
+								<ul>
+									<li>Dinh Xuan Vu - 18521662 </li>
+									<li>Nguyen Thanh Vinh - 18521654 </li>
+									<li>Nguyen Hong Quang - 18521297 </li>
+								</ul>
+							</div>
+							<!-- <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div> -->
+						</div>
+					</div>
+				</div>
 			</div>
 		</nav>
 
@@ -235,7 +261,7 @@
 			document.getElementById("animation1").checked = false;
 			document.getElementById("animation2").checked = false;
 			RemoveAllAnimation();
-  		};
+		};
 
 		$(document).ready(function () {
 			const $valueSpanFOV = $('.valueSpanFOV');
