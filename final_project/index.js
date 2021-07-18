@@ -2,6 +2,7 @@ import * as THREE from './js/three.module.js';
 import { OrbitControls } from './js/OrbitControls.js';
 import { TransformControls } from './js/TransformControls.js';
 import { TeapotBufferGeometry } from './js/TeapotBufferGeometry.js';
+import { GUI } from './js/dat.gui.module.js';
 
 var camera, scene, renderer, control, orbit;
 var mesh, texture;
@@ -20,13 +21,27 @@ var TorusGeometry = new THREE.TorusGeometry(20, 5, 20, 100);
 var TeapotGeometry = new TeapotBufferGeometry(20, 8);
 var DodecahedronGeometry = new THREE.DodecahedronBufferGeometry(25);
 var IcosahedronGeometry = new THREE.IcosahedronBufferGeometry(25);
-var OctahedronGeometry =  new THREE.OctahedronBufferGeometry(25);
+var OctahedronGeometry = new THREE.OctahedronBufferGeometry(25);
 var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
+
+class ColorGUIHelper {
+		constructor(object, prop) {
+			this.object = object;
+			this.prop = prop;
+		}
+		get value() {
+			return `#${this.object[this.prop].getHexString()}`;
+		}
+		set value(hexString) {
+			this.object[this.prop].set(hexString);
+		}
+	}
 
 init();
 render();
 
 function init() {
+	
 	// Scene
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color(0x343a40);
@@ -40,17 +55,17 @@ function init() {
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	// Grid
-    var size = 300;
-    var divisions = 80;
-    // var gridHelper = new THREE.GridHelper(size, divisions, 0x888888);
-    var gridHelper = new THREE.GridHelper(size, divisions, "green");
+	var size = 300;
+	var divisions = 80;
+	// var gridHelper = new THREE.GridHelper(size, divisions, 0x888888);
+	var gridHelper = new THREE.GridHelper(size, divisions, "green");
 	scene.add(gridHelper);
-	
-    // Renderer
-    raycaster = new THREE.Raycaster();
-    renderer = new THREE.WebGLRenderer({antialias: true})
-    renderer.setSize( window.innerWidth, window.innerHeight )
-    renderer.shadowMap.enabled = true;
+
+	// Renderer
+	raycaster = new THREE.Raycaster();
+	renderer = new THREE.WebGLRenderer({ antialias: true })
+	renderer.setSize(window.innerWidth, window.innerHeight)
+	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.getElementById("rendering").addEventListener('mousedown', onMouseDown, false);
 	document.getElementById("rendering").appendChild(renderer.domElement);
@@ -66,7 +81,7 @@ function init() {
 	orbit.update();
 	orbit.addEventListener('change', render);
 	control = new TransformControls(camera, renderer.domElement);
-	console.log(control)
+	console.log(control); 
 	control.addEventListener('change', render);
 	control.addEventListener('dragging-changed', function (event) {
 		orbit.enabled = !event.value;
@@ -165,8 +180,8 @@ function RenderGeo(id) {
 			mesh = new THREE.Mesh(TetrahedronGeometry, material);
 			break;
 	}
-    mesh.name = "mesh1";
-    mesh.castShadow = true;
+	mesh.name = "mesh1";
+	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	scene.add(mesh);
 	control_transform(mesh);
@@ -243,17 +258,17 @@ function SetPointLight() {
 	light = scene.getObjectByName("pl1");
 
 	if (!light) {
-        {
-            const planeSize = 400;
+		{
+			const planeSize = 400;
 			const loader = new THREE.TextureLoader();
 			const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-			const planeMat = new THREE.MeshPhongMaterial({side: THREE.DoubleSide,});
+			const planeMat = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, });
 			meshplan = new THREE.Mesh(planeGeo, planeMat);
 			meshplan.receiveShadow = true;
 			meshplan.rotation.x = Math.PI * -.5;
 			meshplan.position.y += 0.5;
-            scene.add(meshplan);
-        }
+			scene.add(meshplan);
+		}
 		const color = '#FFFFFF';
 		const intensity = 2;
 		light = new THREE.PointLight(color, intensity);
@@ -268,6 +283,12 @@ function SetPointLight() {
 		PointLightHelper = new THREE.PointLightHelper(light);
 		PointLightHelper.name = "plh1";
 		scene.add(PointLightHelper);
+
+		// Add GUI
+		const gui = new GUI();
+		gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
+		gui.add(light, 'intensity', 0, 2, 0.01);
+
 		render();
 	}
 }
@@ -351,21 +372,17 @@ function Animation3() {
 	cancelAnimationFrame(id_animation3);
 	var positionx = mesh.position.x;
 	var positiony = mesh.position.y;
-	if (positiony < position_y + 30 && kt == 0)
-	{
+	if (positiony < position_y + 30 && kt == 0) {
 		mesh.position.y += 0.3;
 	}
-	if (positiony > position_y + 30 && positionx < position_x + 30) 
-	{
+	if (positiony > position_y + 30 && positionx < position_x + 30) {
 		mesh.position.x += 0.3;
 	}
 	if (positiony > position_y + 30 && positionx > position_x + 30) kt += 1;
-	if (kt > 1 && positiony > position_y)
-	{
+	if (kt > 1 && positiony > position_y) {
 		mesh.position.y -= 0.3;
 	}
-	if (kt > 1 && positiony < position_y && positionx > position_x)
-	{
+	if (kt > 1 && positiony < position_y && positionx > position_x) {
 		mesh.position.x -= 0.3;
 	}
 	if (positiony < position_y && positionx < position_x) kt = 0;
@@ -380,14 +397,12 @@ function Animation4() {
 	cancelAnimationFrame(id_animation3);
 	cancelAnimationFrame(id_animation4);
 	var positiony = mesh.position.y;
-	if (positiony < position_y + 30 && kt2 == 0) 
-	{ 
+	if (positiony < position_y + 30 && kt2 == 0) {
 		mesh.position.y += 0.3;
 		mesh.rotation.y += 0.05;
 	}
 	if (positiony > position_y + 30) kt2 += 1;
-	if (kt2 > 1 && positiony > position_y) 
-	{ 
+	if (kt2 > 1 && positiony > position_y) {
 		mesh.position.y -= 0.3;
 		mesh.rotation.y += 0.05;
 	}
