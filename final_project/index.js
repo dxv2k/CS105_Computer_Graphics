@@ -304,7 +304,8 @@ function RemoveLight() {
 	if (type_material == 3 || type_material == 4) {
 		SetMaterial(type_material);
 	}
-	gui.destroy(); 
+	// gui.destroy(); 
+	gui.hide(); 
 	render();
 }
 window.RemoveLight = RemoveLight;
