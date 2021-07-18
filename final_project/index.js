@@ -41,8 +41,9 @@ function init() {
 
 	// Grid
     var size = 300;
-    var divisions = 50;
-    var gridHelper = new THREE.GridHelper(size, divisions, 0x888888);
+    var divisions = 80;
+    // var gridHelper = new THREE.GridHelper(size, divisions, 0x888888);
+    var gridHelper = new THREE.GridHelper(size, divisions, "green");
 	scene.add(gridHelper);
 	
     // Renderer
