@@ -24,6 +24,9 @@ var IcosahedronGeometry = new THREE.IcosahedronBufferGeometry(25);
 var OctahedronGeometry = new THREE.OctahedronBufferGeometry(25);
 var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
 
+// GUI
+var gui = new GUI({autoplace: false}); //seriously this is not a good practice to me...
+
 class ColorGUIHelper {
 		constructor(object, prop) {
 			this.object = object;
@@ -285,7 +288,6 @@ function SetPointLight() {
 		scene.add(PointLightHelper);
 
 		// Add GUI
-		const gui = new GUI();
 		gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
 		gui.add(light, 'intensity', 0, 2, 0.01);
 
@@ -302,6 +304,7 @@ function RemoveLight() {
 	if (type_material == 3 || type_material == 4) {
 		SetMaterial(type_material);
 	}
+	gui.destroy(); 
 	render();
 }
 window.RemoveLight = RemoveLight;
