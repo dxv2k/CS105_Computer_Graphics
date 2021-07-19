@@ -8230,7 +8230,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  background: #866ec7;
+  background: #335384;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -8292,11 +8292,11 @@ h1, h2, h3, h4, h5,
       height: 40px;
       border-radius: 50%; }
       #sidebar .custom-menu .btn.btn-primary {
-        background: #6749b9;
-        border-color: #6749b9; }
+        background: #204996;
+        border-color: #204996; }
         #sidebar .custom-menu .btn.btn-primary:hover, #sidebar .custom-menu .btn.btn-primary:focus {
-          background: #6749b9 !important;
-          border-color: #6749b9 !important; }
+          background: #204996 !important;
+          border-color: #204996 !important; }
 
 a[data-toggle="collapse"] {
   position: relative; }

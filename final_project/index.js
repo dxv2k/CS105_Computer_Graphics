@@ -292,6 +292,7 @@ function SetPointLight() {
 		// Add GUI
 		gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
 		gui.add(light, 'intensity', 0, 2, 0.01);
+		gui.name = "Light Control"; 
 		gui.show(); 
 		render();
 	}
