@@ -25,28 +25,28 @@ var OctahedronGeometry = new THREE.OctahedronBufferGeometry(25);
 var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
 
 // GUI
-var gui = new GUI({autoplace: false}); //seriously this is not a good practice to me...
+var gui = new GUI({ autoplace: false }); //seriously this is not a good practice to me...
 var customContainer = $('.moveGUI').append($(gui.domElement));
-gui.hide(); 
+gui.hide();
 
 class ColorGUIHelper {
-		constructor(object, prop) {
-			this.object = object;
-			this.prop = prop;
-		}
-		get value() {
-			return `#${this.object[this.prop].getHexString()}`;
-		}
-		set value(hexString) {
-			this.object[this.prop].set(hexString);
-		}
+	constructor(object, prop) {
+		this.object = object;
+		this.prop = prop;
 	}
+	get value() {
+		return `#${this.object[this.prop].getHexString()}`;
+	}
+	set value(hexString) {
+		this.object[this.prop].set(hexString);
+	}
+}
 
 init();
 render();
 
 function init() {
-	
+
 	// Scene
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color(0x343a40);
@@ -55,7 +55,10 @@ function init() {
 	var camera_x = 1;
 	var camera_y = 50;
 	var camera_z = 100;
-	camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+	camera = new THREE.PerspectiveCamera(75, // FOV 
+				window.innerWidth / window.innerHeight, // Aspect Ration 
+				0.1, // Near clipping  
+				10000); // Far clipping 
 	camera.position.set(camera_x, camera_y, camera_z);
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -86,7 +89,7 @@ function init() {
 	orbit.update();
 	orbit.addEventListener('change', render);
 	control = new TransformControls(camera, renderer.domElement);
-	console.log(control); 
+	console.log(control);
 	control.addEventListener('change', render);
 	control.addEventListener('dragging-changed', function (event) {
 		orbit.enabled = !event.value;
@@ -95,6 +98,12 @@ function init() {
 
 function render() {
 	renderer.render(scene, camera);
+}
+
+function RemoveMesh() {
+	console.log("Remove All Objects!!!");
+	control.detach(); 
+	scene.remove(mesh);
 }
 
 // 1. Basic 3D model with points, line and solid
@@ -292,8 +301,8 @@ function SetPointLight() {
 		// Add GUI
 		gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
 		gui.add(light, 'intensity', 0, 2, 0.01);
-		gui.name = "Light Control"; 
-		gui.show(); 
+		gui.name = "Light Control";
+		gui.show();
 		render();
 	}
 }
@@ -308,7 +317,7 @@ function RemoveLight() {
 		SetMaterial(type_material);
 	}
 	// gui.destroy(); 
-	gui.hide(); 
+	gui.hide();
 	render();
 }
 window.RemoveLight = RemoveLight;
