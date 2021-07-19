@@ -101,10 +101,12 @@ function render() {
 }
 
 function RemoveMesh() {
-	console.log("Remove All Objects!!!");
+	// Because only supports only 1 object so doing like this is fine 
 	control.detach(); 
 	scene.remove(mesh);
+	render(); 
 }
+window.RemoveMesh = RemoveMesh 
 
 // 1. Basic 3D model with points, line and solid
 function CloneMesh(dummy_mesh) {

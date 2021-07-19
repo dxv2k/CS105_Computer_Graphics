@@ -8361,3 +8361,11 @@ a[data-toggle="collapse"] {
     top: 22.1em;
     right: -1em;
 }
+
+
+.trash{ 
+  background-color: rgb(206, 19, 19);
+}
+.trash:active{ 
+  background-color: red;
+}
