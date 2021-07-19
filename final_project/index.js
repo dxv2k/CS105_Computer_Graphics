@@ -355,26 +355,26 @@ window.SetTexture = SetTexture;
 var mesh = new THREE.Mesh();
 var id_animation1, id_animation2, id_animation3, id_animation4;
 
-function Animation1() {
+function x_rotate_animation() {
 	cancelAnimationFrame(id_animation1);
 	mesh.rotation.x += 0.01;
 	render();
-	id_animation1 = requestAnimationFrame(Animation1);
+	id_animation1 = requestAnimationFrame(x_rotate_animation);
 }
-window.Animation1 = Animation1;
+window.x_rotate_animation = x_rotate_animation;
 
-function Animation2() {
+function y_rotate_animation() {
 	cancelAnimationFrame(id_animation2);
 	mesh.rotation.y += 0.01;
 	render();
-	id_animation2 = requestAnimationFrame(Animation2);
+	id_animation2 = requestAnimationFrame(y_rotate_animation);
 }
-window.Animation2 = Animation2;
+window.y_rotate_animation = y_rotate_animation;
 
 const position_x = mesh.position.x;
 const position_y = mesh.position.y;
 var kt = 0;
-function Animation3() {
+function Square_Rotate_Animation() {
 	cancelAnimationFrame(id_animation4);
 	cancelAnimationFrame(id_animation3);
 	var positionx = mesh.position.x;
@@ -395,12 +395,12 @@ function Animation3() {
 	if (positiony < position_y && positionx < position_x) kt = 0;
 	mesh.rotation.y += 0.01;
 	render();
-	id_animation3 = requestAnimationFrame(Animation3);
+	id_animation3 = requestAnimationFrame(Square_Rotate_Animation);
 }
-window.Animation3 = Animation3;
+window.Square_Rotate_Animation = Square_Rotate_Animation;
 
 var kt2 = 0;
-function Animation4() {
+function Up_Down_Rotate_Animation() {
 	cancelAnimationFrame(id_animation3);
 	cancelAnimationFrame(id_animation4);
 	var positiony = mesh.position.y;
@@ -415,19 +415,19 @@ function Animation4() {
 	}
 	if (positiony < position_y) kt2 = 0;
 	render();
-	id_animation4 = requestAnimationFrame(Animation4);
+	id_animation4 = requestAnimationFrame(Up_Down_Rotate_Animation);
 }
-window.Animation4 = Animation4;
+window.Up_Down_Rotate_Animation = Up_Down_Rotate_Animation;
 
-function RemoveAnimation1() {
+function Remove_X_Rotate() {
 	cancelAnimationFrame(id_animation1);
 }
-window.RemoveAnimation1 = RemoveAnimation1;
+window.Remove_X_Rotate = Remove_X_Rotate;
 
-function RemoveAnimation2() {
+function Remove_Y_Rotate() {
 	cancelAnimationFrame(id_animation2);
 }
-window.RemoveAnimation2 = RemoveAnimation2;
+window.Remove_Y_Rotate = Remove_Y_Rotate;
 
 function RemoveAnimation3() {
 	cancelAnimationFrame(id_animation3);

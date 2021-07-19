@@ -133,22 +133,23 @@
 						<a href="#animationSubmenu" data-toggle="collapse" aria-expanded="false"
 							class="dropdown-toggle">Animation</a>
 						<ul class="collapse list-unstyled" id="animationSubmenu">
+							<!-- Axis Rotation -->
 							<label style="font-size: 14px;color: #FFFFFFCC;">Axis Rotation</label>  
 							<li class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="animation1">
-								<label class="custom-control-label" for="animation1">X-Rotation</label>
+								<input type="checkbox" class="custom-control-input" id="x_rotate">
+								<label class="custom-control-label" for="x_rotate">X-Rotation</label>
 							</li>
 							<li class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="animation2">
-								<label class="custom-control-label" for="animation2">Y-Rotation</label>
+								<input type="checkbox" class="custom-control-input" id="y_rotate">
+								<label class="custom-control-label" for="y_rotate">Y-Rotation</label>
 							</li>
+							<!-- Square & Rotation -->
 							<li>
-								<!-- Animation 3 -->
-								<a href="#" onclick="Animation3()">Animation 1</a>
+								<a href="#" onclick="Square_Rotate_Animation()">Square Movement & Rotation</a>
 							</li>
+							<!-- Up-Down & Rotation -->
 							<li>
-								<!-- Animation 4 -->
-								<a href="#" onclick="Animation4()">Animation 2</a>
+								<a href="#" onclick="Up_Down_Rotate_Animation()">Up-Down & Rotation</a>
 							</li>
 							<li>
 								<a href="#" onclick="ResetAnimation()">Reset</a>
@@ -275,27 +276,27 @@
 	<script type="module" src="./index.js"></script>
 
 	<script>
-		$('#animation1').change(function () {
+		$('#x_rotate').change(function () {
 			if ($(this).prop('checked')) {
-				Animation1();
+				x_rotate_animation();
 			}
 			else {
-				RemoveAnimation1();
+				Remove_X_Rotate();
 			}
 		});
 
-		$('#animation2').change(function () {
+		$('#y_rotate').change(function () {
 			if ($(this).prop('checked')) {
-				Animation2();
+				y_rotate_animation();
 			}
 			else {
-				RemoveAnimation2();
+				Remove_Y_Rotate();
 			}
 		});
 
 		function ResetAnimation() {
-			document.getElementById("animation1").checked = false;
-			document.getElementById("animation2").checked = false;
+			document.getElementById("x_rotate").checked = false;
+			document.getElementById("y_rotate").checked = false;
 			RemoveAllAnimation();
 		};
 
