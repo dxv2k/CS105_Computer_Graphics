@@ -26,6 +26,8 @@ var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
 
 // GUI
 var gui = new GUI({autoplace: false}); //seriously this is not a good practice to me...
+var customContainer = $('.moveGUI').append($(gui.domElement));
+gui.hide(); 
 
 class ColorGUIHelper {
 		constructor(object, prop) {
@@ -273,7 +275,7 @@ function SetPointLight() {
 			scene.add(meshplan);
 		}
 		const color = '#FFFFFF';
-		const intensity = 2;
+		const intensity = 1;
 		light = new THREE.PointLight(color, intensity);
 		light.castShadow = true;
 		light.position.set(0, 70, 0);
@@ -290,7 +292,7 @@ function SetPointLight() {
 		// Add GUI
 		gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
 		gui.add(light, 'intensity', 0, 2, 0.01);
-
+		gui.show(); 
 		render();
 	}
 }

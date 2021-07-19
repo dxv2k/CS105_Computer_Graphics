@@ -8355,3 +8355,9 @@ a[data-toggle="collapse"] {
   .form-control:-moz-placeholder {
     /* Firefox 18- */
     color: rgba(0, 0, 0, 0.3); }
+
+.moveGUI{ 
+    position: absolute;
+    top: 22.1em;
+    right: -1em;
+}
