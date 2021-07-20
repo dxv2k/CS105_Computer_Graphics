@@ -103,6 +103,7 @@ function render() {
 
 // 3D Model Handling 
 function ModelSelect(id){ 
+	let model_path = ""; 
 	switch(id){ 
 		case 1: // Car  
 			model_path = "model/car/scene.gltf";  
@@ -110,27 +111,40 @@ function ModelSelect(id){
 			break; 
 		case 2: // Drone  
 			model_path = "model/drone/scene.gltf";  
+			LoadModel(model_path,0.5,0.5,0.5); 
+			break; 
+		case 3: // Drone  
+			model_path = "model/tank/scene.gltf";  
+			LoadModel(model_path,0.09,0.09,0.09); 
 			break; 
 	}
 }
 window.ModelSelect = ModelSelect 
 
-function LoadModel(model_path) {
+function LoadModel(model_path, 
+		scale_x=35, 
+		scale_y=35,
+		scale_z=35) {
 	let loader = new GLTFLoader();
 	loader.load(
 		// 'model/car/scene.gltf', 
 		model_path, 
 		function (gltf) {
 			scene.add( gltf.scene );
-			
-			gltf.scene.scale.set(35,35,35)
+
+			// Set object scale	
+			// gltf.scene.scale.set(35,35,35)
+			gltf.scene.scale.set(scale_x,scale_y,scale_z); 
+
 			const box = new THREE.Box3().setFromObject( gltf.scene );
 			const center = box.getCenter( new THREE.Vector3() );
-			
+			console.log("Box", box); 	
+			console.log("Center", center); 	
+
 			// Change object position
 			gltf.scene.position.x += ( gltf.scene.position.x - center.x );
 			gltf.scene.position.y += ( gltf.scene.position.y - center.y );
-			gltf.scene.position.y += 30; // this is from observations  
+			gltf.scene.position.y += 33; // this is from observations  
 			gltf.scene.position.z += ( gltf.scene.position.z - center.z );
 
 	});
