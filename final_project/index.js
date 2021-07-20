@@ -102,10 +102,24 @@ function render() {
 }
 
 // 3D Model Handling 
+function ModelSelect(id){ 
+	switch(id){ 
+		case 1: // Car  
+			model_path = "model/car/scene.gltf";  
+			LoadModel(model_path); 
+			break; 
+		case 2: // Drone  
+			model_path = "model/drone/scene.gltf";  
+			break; 
+	}
+}
+window.ModelSelect = ModelSelect 
+
 function LoadModel(model_path) {
 	let loader = new GLTFLoader();
 	loader.load(
-		'model/car/scene.gltf', 
+		// 'model/car/scene.gltf', 
+		model_path, 
 		function (gltf) {
 			scene.add( gltf.scene );
 			
@@ -120,6 +134,7 @@ function LoadModel(model_path) {
 			gltf.scene.position.z += ( gltf.scene.position.z - center.z );
 
 	});
+	render(); 
 }
 window.LoadModel = LoadModel
 
