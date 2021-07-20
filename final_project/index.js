@@ -103,6 +103,7 @@ function render() {
 
 // 3D Model Handling 
 function ModelSelect(id){ 
+	RemoveModel(); 
 	let model_path = ""; 
 	switch(id){ 
 		case 1: // Car  
@@ -127,9 +128,9 @@ function LoadModel(model_path,
 		scale_z=35) {
 	let loader = new GLTFLoader();
 	loader.load(
-		// 'model/car/scene.gltf', 
 		model_path, 
 		function (gltf) {
+			gltf.scene.name = "3d_model"; 
 			scene.add( gltf.scene );
 
 			// Set object scale	
@@ -152,13 +153,20 @@ function LoadModel(model_path,
 }
 window.LoadModel = LoadModel
 
+function RemoveModel(){ 
+	var model = scene.getObjectByName("3d_model"); 
+	scene.remove(model); 
+}
+window.RemoveModel = RemoveModel
+
 function RemoveAll() {
 	// Because only supports only 1 object so doing like this is fine 
 	control.detach();
 	scene.remove(mesh);
 	RemoveLight(); 
+	RemoveModel(); 
 	render();
-	GLTFobjects.remove(GLTFobjects.children[0]);
+	
 }
 window.RemoveAll = RemoveAll
 
