@@ -26,9 +26,13 @@ var OctahedronGeometry = new THREE.OctahedronBufferGeometry(25);
 var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
 
 // GUI
-var gui = new GUI({ autoplace: false }); //seriously this is not a good practice to me...
-var customContainer = $('.moveGUI').append($(gui.domElement));
-gui.hide();
+// var gui = new GUI({ autoplace: false }); //seriously this is not a good practice to me...
+// var customContainer = $('.moveGUI').append($(gui.domElement));
+// gui.hide();
+
+// Add GUI
+
+
 
 class ColorGUIHelper {
 	constructor(object, prop) {
@@ -42,6 +46,13 @@ class ColorGUIHelper {
 		this.object[this.prop].set(hexString);
 	}
 }
+var gui = new GUI({ autoplace: false });
+var customContainer = $('.moveGUI').append($(gui.domElement));
+var folder = gui.addFolder('Light Control');
+folder.addColor(new ColorGUIHelper(light, 'color'), 'value')
+	.name('color');
+folder.add(light, 'intensity', 0, 2, 0.01);
+folder.show();
 
 init();
 render();
@@ -332,25 +343,6 @@ function control_transform(mesh) {
 }
 
 // 4.Light
-// function SelectLightType(id = 1) {
-// 	const color = '#FFFFFF';
-// 	const intensity = 1;
-// 	var type_light;
-// 	switch (id) {
-// 		case 1: // point light  
-// 			type_light = new THREE.PointLight(color, intensity);
-// 			break;
-// 		case 2: // directional light  
-// 			type_light = new THREE.DirectionalLight(color, intensity);
-// 			break;
-// 		case 3: // ambient light 
-// 			type_light = new THREE.AmbientLight(color, intensity);
-// 			break;
-// 	}
-// 	return type_light;
-// }
-// window.SelectLightType = SelectLightType;
-
 function SetPointLight(id = 1) {
 	var type_light;
 	const color = '#FFFFFF';
@@ -364,7 +356,7 @@ function SetPointLight(id = 1) {
 			break;
 	}
 	light = scene.getObjectByName("pl1");
-	RemoveLight(); 
+	RemoveLight();
 
 	if (!light) {
 		{
@@ -380,7 +372,6 @@ function SetPointLight(id = 1) {
 		}
 
 		// light = new THREE.PointLight(color, intensity);
-		// light = new THREE.DirectionalLight(color, intensity);
 		light = type_light;
 
 		light.castShadow = true;
@@ -395,11 +386,14 @@ function SetPointLight(id = 1) {
 		PointLightHelper.name = "plh1";
 		scene.add(PointLightHelper);
 
-		// Add GUI
-		gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
-		gui.add(light, 'intensity', 0, 2, 0.01);
-		gui.name = "Light Control";
-		gui.show();
+		// // Add GUI
+		// var gui = new GUI({ autoplace: false });
+		// var customContainer = $('.moveGUI').append($(gui.domElement));
+		// var folder = gui.addFolder('Light Control');
+		// folder.addColor(new ColorGUIHelper(light, 'color'), 'value')
+		// 	.name('color');
+		// folder.add(light, 'intensity', 0, 2, 0.01);
+		// folder.show();
 		render();
 	}
 }
@@ -413,7 +407,7 @@ function RemoveLight() {
 	if (type_material == 3 || type_material == 4) {
 		SetMaterial(type_material);
 	}
-	gui.hide();
+	// gui.close();
 	render();
 }
 window.RemoveLight = RemoveLight;
