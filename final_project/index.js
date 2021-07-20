@@ -152,13 +152,15 @@ function LoadModel(model_path,
 }
 window.LoadModel = LoadModel
 
-function RemoveMesh() {
+function RemoveAll() {
 	// Because only supports only 1 object so doing like this is fine 
 	control.detach();
 	scene.remove(mesh);
+	RemoveLight(); 
 	render();
+	GLTFobjects.remove(GLTFobjects.children[0]);
 }
-window.RemoveMesh = RemoveMesh
+window.RemoveAll = RemoveAll
 
 // 1. Basic 3D model with points, line and solid
 function CloneMesh(dummy_mesh) {
@@ -370,7 +372,6 @@ function RemoveLight() {
 	if (type_material == 3 || type_material == 4) {
 		SetMaterial(type_material);
 	}
-	// gui.destroy(); 
 	gui.hide();
 	render();
 }
