@@ -102,60 +102,60 @@ function render() {
 }
 
 // 3D Model Handling 
-function ModelSelect(id){ 
-	RemoveModel(); 
-	let model_path = ""; 
-	switch(id){ 
+function ModelSelect(id) {
+	RemoveModel();
+	let model_path = "";
+	switch (id) {
 		case 1: // Car  
-			model_path = "model/car/scene.gltf";  
-			LoadModel(model_path); 
-			break; 
+			model_path = "model/car/scene.gltf";
+			LoadModel(model_path);
+			break;
 		case 2: // Drone  
-			model_path = "model/drone/scene.gltf";  
-			LoadModel(model_path,0.5,0.5,0.5); 
-			break; 
+			model_path = "model/drone/scene.gltf";
+			LoadModel(model_path, 0.5, 0.5, 0.5);
+			break;
 		case 3: // Drone  
-			model_path = "model/tank/scene.gltf";  
-			LoadModel(model_path,0.09,0.09,0.09); 
-			break; 
+			model_path = "model/tank/scene.gltf";
+			LoadModel(model_path, 0.09, 0.09, 0.09);
+			break;
 	}
 }
-window.ModelSelect = ModelSelect 
+window.ModelSelect = ModelSelect
 
-function LoadModel(model_path, 
-		scale_x=35, 
-		scale_y=35,
-		scale_z=35) {
+function LoadModel(model_path,
+	scale_x = 37,
+	scale_y = 40,
+	scale_z = 37) {
 	let loader = new GLTFLoader();
 	loader.load(
-		model_path, 
+		model_path,
 		function (gltf) {
-			gltf.scene.name = "3d_model"; 
-			scene.add( gltf.scene );
+			gltf.scene.name = "3d_model";
+			scene.add(gltf.scene);
 
 			// Set object scale	
 			// gltf.scene.scale.set(35,35,35)
-			gltf.scene.scale.set(scale_x,scale_y,scale_z); 
+			gltf.scene.scale.set(scale_x, scale_y, scale_z);
 
-			const box = new THREE.Box3().setFromObject( gltf.scene );
-			const center = box.getCenter( new THREE.Vector3() );
-			console.log("Box", box); 	
-			console.log("Center", center); 	
+			const box = new THREE.Box3().setFromObject(gltf.scene);
+			const center = box.getCenter(new THREE.Vector3());
+			console.log("Box", box);
+			console.log("Center", center);
 
 			// Change object position
-			gltf.scene.position.x += ( gltf.scene.position.x - center.x );
-			gltf.scene.position.y += ( gltf.scene.position.y - center.y );
+			gltf.scene.position.x += (gltf.scene.position.x - center.x);
+			gltf.scene.position.y += (gltf.scene.position.y - center.y);
 			gltf.scene.position.y += 33; // this is from observations  
-			gltf.scene.position.z += ( gltf.scene.position.z - center.z );
+			gltf.scene.position.z += (gltf.scene.position.z - center.z);
 
-	});
-	render(); 
+		});
+	render();
 }
 window.LoadModel = LoadModel
 
-function RemoveModel(){ 
-	var model = scene.getObjectByName("3d_model"); 
-	scene.remove(model); 
+function RemoveModel() {
+	var model = scene.getObjectByName("3d_model");
+	scene.remove(model);
 }
 window.RemoveModel = RemoveModel
 
@@ -163,10 +163,10 @@ function RemoveAll() {
 	// Because only supports only 1 object so doing like this is fine 
 	control.detach();
 	scene.remove(mesh);
-	RemoveLight(); 
-	RemoveModel(); 
+	RemoveLight();
+	RemoveModel();
 	render();
-	
+
 }
 window.RemoveAll = RemoveAll
 
@@ -332,8 +332,39 @@ function control_transform(mesh) {
 }
 
 // 4.Light
-function SetPointLight() {
+// function SelectLightType(id = 1) {
+// 	const color = '#FFFFFF';
+// 	const intensity = 1;
+// 	var type_light;
+// 	switch (id) {
+// 		case 1: // point light  
+// 			type_light = new THREE.PointLight(color, intensity);
+// 			break;
+// 		case 2: // directional light  
+// 			type_light = new THREE.DirectionalLight(color, intensity);
+// 			break;
+// 		case 3: // ambient light 
+// 			type_light = new THREE.AmbientLight(color, intensity);
+// 			break;
+// 	}
+// 	return type_light;
+// }
+// window.SelectLightType = SelectLightType;
+
+function SetPointLight(id = 1) {
+	var type_light;
+	const color = '#FFFFFF';
+	const intensity = 1;
+	switch (id) {
+		case 1: // point light  
+			type_light = new THREE.PointLight(color, intensity);
+			break;
+		case 2: // directional light  
+			type_light = new THREE.DirectionalLight(color, intensity);
+			break;
+	}
 	light = scene.getObjectByName("pl1");
+	RemoveLight(); 
 
 	if (!light) {
 		{
@@ -347,9 +378,11 @@ function SetPointLight() {
 			meshplan.position.y += 0.5;
 			scene.add(meshplan);
 		}
-		const color = '#FFFFFF';
-		const intensity = 1;
-		light = new THREE.PointLight(color, intensity);
+
+		// light = new THREE.PointLight(color, intensity);
+		// light = new THREE.DirectionalLight(color, intensity);
+		light = type_light;
+
 		light.castShadow = true;
 		light.position.set(0, 70, 0);
 		light.name = "pl1";
