@@ -3,6 +3,7 @@ import { OrbitControls } from './js/OrbitControls.js';
 import { TransformControls } from './js/TransformControls.js';
 import { TeapotBufferGeometry } from './js/TeapotBufferGeometry.js';
 import { GUI } from './js/dat.gui.module.js';
+import { GLTFLoader } from './js/GLTFloader.js';
 
 var camera, scene, renderer, control, orbit;
 var mesh, texture;
@@ -56,9 +57,9 @@ function init() {
 	var camera_y = 50;
 	var camera_z = 100;
 	camera = new THREE.PerspectiveCamera(75, // FOV 
-				window.innerWidth / window.innerHeight, // Aspect Ration 
-				0.1, // Near clipping  
-				10000); // Far clipping 
+		window.innerWidth / window.innerHeight, // Aspect Ration 
+		0.1, // Near clipping  
+		10000); // Far clipping 
 	camera.position.set(camera_x, camera_y, camera_z);
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -100,13 +101,35 @@ function render() {
 	renderer.render(scene, camera);
 }
 
+// 3D Model Handling 
+function LoadModel(model_path) {
+	let loader = new GLTFLoader();
+	loader.load(
+		'model/car/scene.gltf', 
+		function (gltf) {
+			scene.add( gltf.scene );
+			
+			gltf.scene.scale.set(35,35,35)
+			const box = new THREE.Box3().setFromObject( gltf.scene );
+			const center = box.getCenter( new THREE.Vector3() );
+			
+			// Change object position
+			gltf.scene.position.x += ( gltf.scene.position.x - center.x );
+			gltf.scene.position.y += ( gltf.scene.position.y - center.y );
+			gltf.scene.position.y += 30; // this is from observations  
+			gltf.scene.position.z += ( gltf.scene.position.z - center.z );
+
+	});
+}
+window.LoadModel = LoadModel
+
 function RemoveMesh() {
 	// Because only supports only 1 object so doing like this is fine 
-	control.detach(); 
+	control.detach();
 	scene.remove(mesh);
-	render(); 
+	render();
 }
-window.RemoveMesh = RemoveMesh 
+window.RemoveMesh = RemoveMesh
 
 // 1. Basic 3D model with points, line and solid
 function CloneMesh(dummy_mesh) {
