@@ -46,13 +46,6 @@ class ColorGUIHelper {
 		this.object[this.prop].set(hexString);
 	}
 }
-var gui = new GUI({ autoplace: false });
-var customContainer = $('.moveGUI').append($(gui.domElement));
-var folder = gui.addFolder('Light Control');
-folder.addColor(new ColorGUIHelper(light, 'color'), 'value')
-	.name('color');
-folder.add(light, 'intensity', 0, 2, 0.01);
-folder.show();
 
 init();
 render();
